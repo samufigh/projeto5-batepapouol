@@ -16,7 +16,7 @@ function mostrarMensagens(resposta){
         let mensagem = informacoes[i]
         if (mensagem.type === 'status'){
             main.innerHTML+=`
-            <li class = "caixa" >
+            <li data-test="message" class = "caixa" >
                 <div> <span>(${mensagem.time})</span> <b>${mensagem.from}</b> ${mensagem.text}</div>
                 <p></p>
             </li>
@@ -24,7 +24,7 @@ function mostrarMensagens(resposta){
         }
         else{
             main.innerHTML+=`
-            <li class = "caixa" >
+            <li data-test="message" class = "caixa" >
                 <div> <span>(${mensagem.time})</span> <b>${mensagem.from}</b> para <b  class = "todos" >${mensagem.to}</b>: ${mensagem.text}</div>
                 <p></p>
             </li>
