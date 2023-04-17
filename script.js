@@ -1,7 +1,5 @@
 axios.defaults.headers.common['Authorization'] = 'WKgNq8Z2mDPneSiuCRWuHS09'; //autorização
 
-//variáveis e objetos -------------------------------------------------------------------------
-
 //funções -------------------------------------------------------------------------------------
 function naoEnviou(res){
     window.location.reload(true);
@@ -10,8 +8,7 @@ function naoEnviou(res){
 function mostrarMensagens(resposta){
     let main = document.querySelector('.main')
     main.innerHTML='';
-    let informacoes = resposta.data;
-    console.log(informacoes);   
+    let informacoes = resposta.data;   
     for (let i=0; i<informacoes.length; i++){
         let mensagem = informacoes[i]
         if (mensagem.type === 'status'){
@@ -42,7 +39,6 @@ function verificarOnline(){
 
 function enviarMensagem(){
     let msg = document.querySelector('.texto').value;
-    console.log(msg);
 
     const msgEnviada = {
         from: nome,
@@ -56,22 +52,20 @@ function enviarMensagem(){
 }
 
 function entrou (resposta){
-    console.log ('entrou na sala');
-
     //verificar se esta online
     verificarOnline();
 
     //exibir mensagens
-    console.log('exibir mensagens');
     const promessaMensagens = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
     promessaMensagens.then( mostrarMensagens );
 }
 
-function saiu () {
+function falhouAoEntrar () {
     nome = prompt ('Digite outro nome, pois esse já está em uso');
     usuario = {
         name: nome
     }
+    axios.get('https://mock-api.driven.com.br/api/vm/uol/messages').then( mostrarMensagens );
 }
 
 //execução ------------------------------------------------------------------------------------
@@ -88,8 +82,8 @@ const promessaUser = axios.post('https://mock-api.driven.com.br/api/vm/uol/parti
 
 promessaUser.then ( entrou );
 setInterval(function() {
-    axios.get('https://mock-api.driven.com.br/api/vm/uol/messages').then( mostrarMensagens )
+    axios.get('https://mock-api.driven.com.br/api/vm/uol/messages').then( mostrarMensagens );
     console.log('atualizou');
 }, 3000);
 
-promessaUser.catch ( saiu );
+promessaUser.catch ( falhouAoEntrar );
